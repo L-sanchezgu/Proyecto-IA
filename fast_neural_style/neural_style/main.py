@@ -2,12 +2,13 @@ import streamlit as st
 from PIL import Image
 from pathlib import Path
 import os
+import style
 
 try:
     from fast_neural_style.neural_style import style
 except ImportError:
     import style
-
+    
 # Configuración de la página
 st.set_page_config(
     page_title="Transferencia de Estilo Neural",

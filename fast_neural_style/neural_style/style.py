@@ -14,9 +14,14 @@ from torchvision import datasets
 from torchvision import transforms
 import torch.onnx
 
-from . import utils 
-from .vgg import Vgg16
-from .transformer_net import TransformerNet
+
+try:
+    from . import utils  # Para ejecución local
+except ImportError:
+    import utils  # Para Streamlit Cloud
+
+from transformer_net import TransformerNet
+from vgg import Vgg16
 
 # Configuración automática del dispositivo
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  

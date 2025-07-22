@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 from pathlib import Path
 import os
-import style
+from . import style 
 
 # Configuración de la página
 st.set_page_config(

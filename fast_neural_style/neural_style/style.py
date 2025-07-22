@@ -14,9 +14,9 @@ from torchvision import datasets
 from torchvision import transforms
 import torch.onnx
 
-import utils
-from transformer_net import TransformerNet
-from vgg import Vgg16
+from . import utils 
+from .vgg import Vgg16
+from .transformer_net import TransformerNet
 
 # Configuración automática del dispositivo
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  

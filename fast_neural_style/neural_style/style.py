@@ -20,7 +20,9 @@ try:
 except ImportError:
     import utils  # Para Streamlit Cloud
 
-from transformer_net_v2 import TransformerNet
+from transformer_net import TransformerNet
+from transformer_net_v2 import TransformerNet as TransformerNetV2
+
 from vgg19 import Vgg19
 
 # Configuración automática del dispositivo
@@ -38,7 +40,11 @@ else:
 
 def load_model(model_path):
     with torch.no_grad():
-            style_model = TransformerNet()
+            style_name = os.path.basename(model_path).lower()
+            if "michelangelo" in style_name:
+                style_model = TransformerNetV2()
+            else:
+                style_model = TransformerNet()
             state_dict = torch.load(model_path)
             # remove saved deprecated running_* keys in InstanceNorm from the checkpoint
             for k in list(state_dict.keys()):
@@ -48,9 +54,9 @@ def load_model(model_path):
             style_model.to(device)
             style_model.eval()
             return style_model
-
+    
 def stylize(style_model, content_image, output_image):
-
+    
     content_image = utils.load_image(content_image)
     content_transform = transforms.Compose([
         transforms.ToTensor(),

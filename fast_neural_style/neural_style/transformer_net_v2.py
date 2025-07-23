@@ -53,5 +53,5 @@ class TransformerNet(nn.Module):
         y = self.relu(self.in5(self.deconv2(y)))
         y = self.deconv3(y)
 
-        return y + X  
+        return y 
 

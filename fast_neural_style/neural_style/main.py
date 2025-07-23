@@ -127,7 +127,7 @@ with st.sidebar:
     
     style_name = st.selectbox(
         'Seleccionar estilo artístico',
-        ('candy', 'mosaic', 'rain_princess', 'udnie','monet')
+        ('candy', 'mosaic', 'rain_princess', 'udnie','monet','michelangelo')
     )
 
 # Layout principal

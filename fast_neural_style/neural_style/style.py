@@ -20,8 +20,8 @@ try:
 except ImportError:
     import utils  # Para Streamlit Cloud
 
-from transformer_net import TransformerNet
-from vgg import Vgg16
+from transformer_net_v2 import TransformerNet
+from vgg19 import Vgg19
 
 # Configuración automática del dispositivo
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  

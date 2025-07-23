@@ -10,11 +10,12 @@ from torch.optim import Adam
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision import transforms
+from datetime import datetime
 import torch.onnx
 
 import utils
-from transformer_net import TransformerNet
-from vgg import Vgg16
+from transformer_net_v2 import TransformerNet
+from vgg19 import Vgg19
 
 
 def check_paths(args):
@@ -32,7 +33,10 @@ def train(args):
     if args.accel:
         device = torch.accelerator.current_accelerator()
     else:
-        device = torch.device("cpu")
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    if torch.cuda.is_available():
+        torch.backends.cudnn.benchmark = True  # Activar optimización para convoluciones
 
     print(f"Using device: {device}")
 
@@ -52,7 +56,8 @@ def train(args):
     optimizer = Adam(transformer.parameters(), args.lr)
     mse_loss = torch.nn.MSELoss()
 
-    vgg = Vgg16(requires_grad=False).to(device)
+    vgg = Vgg19().to(device)
+
     style_transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Lambda(lambda x: x.mul(255))
@@ -64,19 +69,20 @@ def train(args):
     features_style = vgg(utils.normalize_batch(style))
     gram_style = [utils.gram_matrix(y) for y in features_style]
 
+
     for e in range(args.epochs):
         transformer.train()
         agg_content_loss = 0.
         agg_style_loss = 0.
         count = 0
+
         for batch_id, (x, _) in enumerate(train_loader):
             n_batch = len(x)
             count += n_batch
             optimizer.zero_grad()
-
             x = x.to(device)
-            y = transformer(x)
 
+            y = transformer(x)
             y = utils.normalize_batch(y)
             x = utils.normalize_batch(x)
 
@@ -95,33 +101,35 @@ def train(args):
             total_loss.backward()
             optimizer.step()
 
+
             agg_content_loss += content_loss.item()
             agg_style_loss += style_loss.item()
 
             if (batch_id + 1) % args.log_interval == 0:
                 mesg = "{}\tEpoch {}:\t[{}/{}]\tcontent: {:.6f}\tstyle: {:.6f}\ttotal: {:.6f}".format(
                     time.ctime(), e + 1, count, len(train_dataset),
-                                  agg_content_loss / (batch_id + 1),
-                                  agg_style_loss / (batch_id + 1),
-                                  (agg_content_loss + agg_style_loss) / (batch_id + 1)
+                    agg_content_loss / (batch_id + 1),
+                    agg_style_loss / (batch_id + 1),
+                    (agg_content_loss + agg_style_loss) / (batch_id + 1)
                 )
                 print(mesg)
 
             if args.checkpoint_model_dir is not None and (batch_id + 1) % args.checkpoint_interval == 0:
                 transformer.eval().cpu()
-                ckpt_model_filename = "ckpt_epoch_" + str(e) + "_batch_id_" + str(batch_id + 1) + ".pth"
+                ckpt_model_filename = f"ckpt_epoch_{e}_batch_id_{batch_id + 1}.pth"
                 ckpt_model_path = os.path.join(args.checkpoint_model_dir, ckpt_model_filename)
                 torch.save(transformer.state_dict(), ckpt_model_path)
                 transformer.to(device).train()
 
-    # save model
-    transformer.eval().cpu()
-    save_model_filename = "epoch_" + str(args.epochs) + "_" + str(time.ctime()).replace(' ', '_') + "_" + str(
-        args.content_weight) + "_" + str(args.style_weight) + ".model"
+    # Generar timestamp seguro (sin caracteres no válidos)
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    save_model_filename = f"epoch_{args.epochs}_{timestamp}_{args.content_weight}_{args.style_weight}.model"
     save_model_path = os.path.join(args.save_model_dir, save_model_filename)
+
+    transformer.eval().cpu()
     torch.save(transformer.state_dict(), save_model_path)
 
-    print("\nDone, trained model saved at", save_model_path)
+    print("\n✅ Entrenamiento finalizado. Modelo guardado en:", save_model_path)
 
 
 def stylize(args):

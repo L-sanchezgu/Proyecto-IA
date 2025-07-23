@@ -67,7 +67,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Encabezado simplificado
 st.markdown("""
 <div class="main-header">
     <h1 class="style-title">🎨 Catálogo de Estilos</h1>
@@ -75,32 +74,54 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Diccionario de estilos
+
 ESTILOS = {
+        " El paseo ": {
+        "imagen": "images/style-images/monet.jpg",
+        "descripcion": " El Paseo (también conocido como La Mujer con Sombrilla o Madame Monet y su Hijo) es una de las obras más icónicas de Claude Monet. Representa a su primera esposa, Camille Monet, "
+        "y a su hijo Jean paseando por un campo en Argenteuil, cerca de París. Camille aparece de pie en una colina, vestida con un elegante traje blanco y sosteniendo una sombrilla que proyecta una sombra "
+        "sobre su rostro. La escena captura un momento efímero, con el viento moviendo su vestido y la hierba del campo, transmitiendo una sensación de movimiento y vida.",
+        "tecnica": "	Óleo sobre tela con pinceladas rápidas y sueltas, colores vibrantes, contraste de luz/sombra todas caracteristicas tipicas del estilo impresionista.",
+        "año": "1875"
+    },
+        "Udnie, Young American Girl": {
+        "imagen": "images/style-images/udnie.jpg",
+        "descripcion": "Se cree que esta pintura se inspiró en la interpretación de una danza de estilo hindú de la bailarina polaca Stasia Napierkowska"
+        "Se le considera una obra maestra de la abstracción temprana que fusiona cubismo, orfismo y futurismo en una explosión de formas dinámicas. ",
+        "tecnica": "Pintura al óleo sobre lienzo",
+        "año": "1913"
+    },
+
     "Candy": {
         "imagen": "images/style-images/candy.jpg",
-        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec non massa sodales, faucibus lectus quis, semper lectus. Nam elementum tellus non tincidunt hendrerit. Donec at laoreet diam, id blandit dui. Phasellus semper dolor in nisl condimentum ultricies vestibulum eu sem. Ut ullamcorper leo mauris, ut rhoncus odio venenatis vitae. Morbi finibus lectus ex, ac scelerisque ante interdum eu. Etiam nec vestibulum mi, a posuere odio. Ut laoreet odio justo, eget dapibus tellus ultrices non.",
-        "tecnica": "Redes Neuronales Convolucionales (VGG-19)",
+        "descripcion": " Transforma imágenes en composiciones ultra-coloridas y oníricas, con colores saturados que parecen derretirse como caramelos. Los bordes se difuminan creando un efecto dulce y surrealista, ideal para retratos fantásticos o paisajes de ensueño ",
+        "tecnica": "Desconocida",
         "año": "2016"
     },
+
+        "Rain Princess": {
+        "imagen": "images/style-images/rain_princess.jpg",
+        "descripcion": "Obra mas famosa del pintor bielorruso Leonid Afremov, la cual tiene un efecto melancólico y atmosférico que recuerda a pinturas impresionistas de días lluviosos, con tonos"
+        " azulados y pinceladas fluidas.  El autor se caracteriza por nunca hacer uso de pincel, siendo esta una obra creada unicamente con espatula. ",
+        "tecnica": "Oleo sobre lienzo la cual  evoca la melancolía y vitalidad de las pinturas impresionistas ",
+        "año": "2003"
+    },
+    
     "Mosaic": {
         "imagen": "images/style-images/mosaic.jpg",
-        "descripcion": "Morbi elementum elit eget erat tincidunt, in aliquam sem mollis. Nullam bibendum molestie facilisis. Cras felis diam, cursus ut venenatis at, fermentum at lacus. Sed quis ligula neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam porttitor, diam a aliquet dapibus, augue sem tempor ligula, vel vehicula turpis mauris sit amet lectus. Etiam condimentum placerat venenatis.",
-        "tecnica": "Algoritmos de teselado adaptativo",
+        "descripcion": "Transforma imágenes en composiciones que imitan los mosaicos clásicos, fragmentando la realidad en pequeñas teselas digitales de colores vibrantes. Cada detalle se reconstruye mediante patrones geométricos, creando un efecto entre lo artesanal y lo pixelado, como una versión moderna de los antiguos mosaicos romanos o bizantinos.",
+        "tecnica": "Desconocido",
         "año": "Inspiración siglo VI"
     },
-    "Rain Princess": {
-        "imagen": "images/style-images/rain_princess.jpg",
-        "descripcion": "Praesent laoreet, risus eu fermentum fringilla, turpis nibh feugiat risus, in congue erat turpis ac ante. Cras placerat molestie mauris, eget euismod libero tristique sit amet. Nunc sed dapibus metus. Nam ut ligula felis. Cras sit amet quam mi. Nam libero quam, fringilla at auctor vitae, commodo vel neque. Maecenas nec nisi arcu. Etiam imperdiet velit ut nisl dictum mollis.",
-        "tecnica": "Transferencia de estilo neural (AdaIN)",
-        "año": "2018"
-    },
-    "Udnie": {
-        "imagen": "images/style-images/udnie.jpg",
-        "descripcion": "Proin et enim at orci mattis molestie at non velit. In hac habitasse platea dictumst. Pellentesque posuere mollis libero, ac eleifend risus pellentesque quis. Vestibulum nunc felis, aliquam vel erat ac, pellentesque hendrerit turpis. Donec tincidunt nibh risus, vitae congue risus pulvinar at. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl turpis, euismod tempor elementum id.",
-        "tecnica": "Transformación geométrica profunda",
-        "año": "Inspiración 1913"
+
+
+    "La creación de Adán": {
+        "imagen": "images/style-images/michelangelo.jpg",
+        "descripcion": "Fresco icónico de la Capilla Sixtina que representa el momento en que Dios da vida a Adán. Las figuras divinas y humanas se conectan a través de un gesto casi tangible, con composición dramática y fuerza visual. El contraste entre la energía celestial y la languidez terrenal de Adán crea una narrativa poderosa.",
+        "tecnica": "Pintura al fresco con dominio anatómico extremo, colores vibrantes (revelados tras restauración) y dinamismo en las figuras.",
+        "año": "1511"
     }
+
 }
 
 # Grid de estilos
